@@ -11,34 +11,41 @@ if exists('g:loaded_hateblo')
   finish
 endif
 
+if !exists('g:hateblo_dir')
+    let g:hateblo_dir = expand("$HOME/.hateblo/blog")
+else 
+    let g:hateblo_dir = expand(g:hateblo_dir)
+endif
+
+if !isdirectory(g:hateblo_dir) 
+    if (input(printf('"%s" does not exist. Create? [y/N]', g:hateblo_dir)) =~? '^y\%[es]$')
+        call mkdir(iconv(g:hateblo_dir, &encoding, &termencoding), 'p')
+    else 
+        let g:hateblo_dir = expand("./")
+    endif
+endif
+
+if !exists('g:hateblo_config_path')
+    let g:hateblo_config_path =expand("$HOME/.hateblo.vim")
+else  
+    let g:hateblo_config_path = expand(g:hateblo_config_path)
+endif
+
+if filereadable(g:hateblo_config_path)
+  execute "source " . g:hateblo_config_path
+endif
+
+if !exists('g:hateblo_vim')
+  finish
+endif
+
 
 "Recommended Global Configuration
 " let g:hateblo_config_path = '$HOME/.hateblo/.hateblo.vim'
 " let g:hateblo_dir = '$HOME/.hateblo/blog'
 " let g:hateblo_title_prefix = 'TITLE:'
 " let g:hateblo_category_prefix = 'CATEGORY:'
-
-if !exists('g:hateblo_dir')
-    let g:hateblo_dir = "$HOME/.hateblo/blog"
-    if !isdirectory(g:hateblo_dir) && (
-                \ input(printf('"%s" does not exist. Create? [y/N]', g:hateblo_dir)) =~? '^y\%[es]$')
-        call mkdir(iconv(g:hateblo_dir, &encoding, &termencoding), 'p')
-    else
-        let g:hateblo_dir = ""
-    endif
-
-if !exists('g:hateblo_config_path')
-    let g:hateblo_config_path = "$HOME/.hateblo.vim"
-endif
-
-if filereadable(g:hateblo_config_path)
-  source  g:hateblo_config_path
-endif
-if !exists('g:hateblo_vim')
-  finish
-endif
-
-
+"
 " This script expects the following variables in ~/.hateblo.vim
 " - g:hateblo_vim['user']           User ID
 " - g:hateblo_vim['api_key']        API Key
