@@ -75,7 +75,9 @@ function! hateblo#detailEntry(entry_url)
 
   let l:lines = s:get_lines(l:entry)
   silent! normal ggdG
-  call append(0, l:lines)
+  call append(1, l:lines)
+  call append(0, s:title_prefix . l:entry['title'])
+  call append(1, s:category_prefix . join(s:get_entry_category(l:entry), ', '))
   call s:save_entry_meta_to_buffer(a:entry_url, l:entry)
 endfunction
 
