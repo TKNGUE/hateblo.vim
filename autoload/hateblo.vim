@@ -74,6 +74,7 @@ function! hateblo#detailEntry(entry_url)
         \ .'/'. l:escaped_entry_title
 
   let l:lines = s:get_lines(l:entry)
+  silent! normal ggdG
   call append(0, l:lines)
   call s:save_entry_meta_to_buffer(a:entry_url, l:entry)
 endfunction
