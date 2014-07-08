@@ -93,6 +93,17 @@ Provided commands
 現在のバッファのエントリを削除します．
 上述の方法で開いたバッファでしか実行できません．
 
+Configuration
+------------
+.hateblo.vimの位置、blogのentryの保存位置などを指定できます.
+```vim
+NeoBundle 'TKNGUE/hateblo.vim' ,{
+            \ 'depends'  : ['mattn/webapi-vim', 'Shoug/unite.vim'],
+            \}
+let g:hateblo_config_path = '$HOME/.hateblo/.hateblo.vim'
+let g:hateblo_dir = '$HOME/.hateblo/blog'
+```
+
 Dependencies
 ------------
 

@@ -9,6 +9,9 @@ function! hateblo#createEntry(is_draft)
   let l:lines    = s:format_lines(getline(b:hateblo_contents_beginning_line, '$'))
   let l:content  = join(l:lines, "\n")
 
+  let l:escaped_entry_title = hateblo#string#escape_space(l:title)
+  execute  "write ". hateblo#string#prepend_space( g:hateblo_dir ) . '/'. l:escaped_entry_title
+
   if s:ask('Post?')
     call hateblo#webapi#createEntry(l:title, l:content, l:category, a:is_draft)
     redraw
@@ -67,8 +70,9 @@ function! hateblo#detailEntry(entry_url)
   let l:entry = hateblo#webapi#getEntry(a:entry_url)
   let l:escaped_entry_title = hateblo#string#escape_space(l:entry['title'])
   execute g:hateblo_vim['edit_command'] 
-        \ . hateblo#string#prepend_space(g:hateblo_dir) 
-        \. hateblo#string#prepend_space(l:escaped_entry_title)
+        \. hateblo#string#prepend_space(g:hateblo_dir) 
+        \ .'/'. l:escaped_entry_title
+
   let l:lines = s:get_lines(l:entry)
   call append(0, l:lines)
   call s:save_entry_meta_to_buffer(a:entry_url, l:entry)
