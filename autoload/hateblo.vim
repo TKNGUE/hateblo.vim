@@ -66,7 +66,9 @@ endfunction
 function! hateblo#detailEntry(entry_url)
   let l:entry = hateblo#webapi#getEntry(a:entry_url)
   let l:escaped_entry_title = hateblo#string#escape_space(l:entry['title'])
-  execute g:hateblo_vim['edit_command'] . hateblo#string#prepend_space(l:escaped_entry_title)
+  execute g:hateblo_vim['edit_command'] 
+        \ . hateblo#string#prepend_space(g:hateblo_dir) 
+        \. hateblo#string#prepend_space(l:escaped_entry_title)
   let l:lines = s:get_lines(l:entry)
   call append(0, l:lines)
   call s:save_entry_meta_to_buffer(a:entry_url, l:entry)
