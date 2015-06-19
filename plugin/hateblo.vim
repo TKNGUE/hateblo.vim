@@ -39,7 +39,6 @@ if !exists('g:hateblo_vim')
   finish
 endif
 
-
 "Recommended Global Configuration
 " let g:hateblo_config_path = '$HOME/.hateblo/.hateblo.vim'
 " let g:hateblo_dir = '$HOME/.hateblo/blog'
@@ -73,6 +72,7 @@ command! -nargs=0 HatebloDelete      call hateblo#deleteEntry()
 augroup hateblo_metarw_autosave
   autocmd!
   autocmd BufUnload hateblo:[0-9]* call metarw#hateblo#autosave()
+  execute "autocmd BufRead ".  g:hateblo_dir. "/* set ft=markdown"
 augroup END
 
 let g:loaded_hateblo = 1
